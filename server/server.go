@@ -15,8 +15,7 @@ type Server struct {
 func (server Server) Run(){
 	cer, err := tls.LoadX509KeyPair(server.CertificatePath, server.KeyPath)
 	if err != nil {
-		println(err)
-		log.Fatal(err)
+		log.Println(err)
 		return
 	}
 
@@ -24,7 +23,7 @@ func (server Server) Run(){
 	ln, err := tls.Listen("tcp", ":443", config)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		return
 	}
 
@@ -34,12 +33,13 @@ func (server Server) Run(){
 		println("Waiting for tls connection")
 		conn, err := ln.Accept()
 		if err != nil{
-			log.Fatal(err)
+			log.Println(err)
 			continue
 		}
 		go server.HandleConnection(conn)
 	}
 }
+
 func (s Server) HandleConnection(conn net.Conn) {
 	defer conn.Close()
 	r := bufio.NewReader(conn)
@@ -47,6 +47,7 @@ func (s Server) HandleConnection(conn net.Conn) {
 	for {
 		msg, err := r.ReadString('\n')
 		if err != nil {
+			log.Println(err)
 			return
 		}
 
@@ -55,6 +56,7 @@ func (s Server) HandleConnection(conn net.Conn) {
 		_, err = conn.Write([]byte("World\n"))
 
 		if err != nil {
+			log.Println(err)
 			return
 		}
 	}
