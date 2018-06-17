@@ -5,6 +5,8 @@ import (
 	"net"
 	"bufio"
 	"log"
+	"crypto/x509"
+	"io/ioutil"
 )
 
 type Server struct {
@@ -19,7 +21,19 @@ func (server Server) Run(){
 		return
 	}
 
-	config := &tls.Config{Certificates: []tls.Certificate{cer}}
+	certPool := x509.NewCertPool()
+	data, err := ioutil.ReadFile("resources/server/server.crt")
+
+	if err != nil {
+		log.Println( err )
+	}
+	certPool.AppendCertsFromPEM(data)
+
+	config := &tls.Config{
+		ClientCAs: certPool,
+		Certificates: []tls.Certificate{cer},
+		ClientAuth: tls.RequireAndVerifyClientCert,
+	}
 	ln, err := tls.Listen("tcp", ":443", config)
 
 	if err != nil {
