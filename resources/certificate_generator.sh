@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+mkdir ./resources/CA
+mkdir ./resources/server
+mkdir ./resources/clients
+mkdir ./resources/clients/crts
+mkdir ./resources/clients/keys
+
 openssl genrsa -out ./resources/CA/rootCA.key 4096
 openssl req -x509 -new -nodes -key ./resources/CA/rootCA.key -sha256 -days 1024 -out ./resources/CA/rootCA.crt -config ./resources/conf/csr.conf
 
