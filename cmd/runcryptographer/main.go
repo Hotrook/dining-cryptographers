@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/Hotrook/dining_cryptographers/cryptographer"
+	"github.com/Hotrook/dining_cryptographers/logutils"
 )
 
 var(
@@ -13,6 +14,8 @@ var(
 func main(){
 
 	flag.Parse()
+	logutils.InitLogger()
+
 	cryptographer := cryptographer.Cryptographer{Id: *id, Payed: *payed }
 	cryptographer.Run()
 

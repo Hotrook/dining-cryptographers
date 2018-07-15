@@ -108,7 +108,7 @@ func (c * Cryptographer) init() (net.Listener, error) {
 	}
 
 	certPool := x509.NewCertPool()
-	data, err := ioutil.ReadFile("resources/CA/server.crt")
+	data, err := ioutil.ReadFile("resources/CA/rootCA.crt")
 
 	if err != nil {
 		log.Println(err)

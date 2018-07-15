@@ -15,7 +15,6 @@ type Server struct {
 	KeyPath         string
 	RootCAPath 		string
 	Config 			*tls.Config
-
 }
 
 func (server* Server) Run(){
@@ -95,7 +94,7 @@ func (server* Server) init() (error) {
 		return err
 	}
 	certPool := x509.NewCertPool()
-	data, err := ioutil.ReadFile("resources/CA/server.crt")
+	data, err := ioutil.ReadFile("resources/CA/rootCA.crt")
 	if err != nil {
 		log.Println(err)
 		return err
